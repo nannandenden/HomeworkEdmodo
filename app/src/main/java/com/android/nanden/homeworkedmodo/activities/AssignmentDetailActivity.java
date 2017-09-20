@@ -1,5 +1,6 @@
 package com.android.nanden.homeworkedmodo.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -99,6 +100,9 @@ public class AssignmentDetailActivity extends AppCompatActivity implements Assig
 
     @Override
     public void onItemClick(Student student) {
-        
+        Intent intent = new Intent(AssignmentDetailActivity.this, StudentActivity.class);
+        intent.putExtra("student", student);
+        intent.putExtra("title", assignment.getTitle());
+        startActivity(intent);
     }
 }
