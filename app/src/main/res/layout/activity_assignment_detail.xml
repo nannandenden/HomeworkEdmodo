@@ -23,7 +23,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <TextView
-        android:id="@+id/tvDetail"
+        android:id="@+id/tvDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -35,9 +35,9 @@
         android:textAppearance="@android:style/TextAppearance.Medium"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvDetail"
+        android:id="@+id/rvStudentDetail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tvDetail"/>
+        android:layout_below="@+id/tvDescription"/>
 
 </RelativeLayout>

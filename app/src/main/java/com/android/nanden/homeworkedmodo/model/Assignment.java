@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.android.nanden.homeworkedmodo.Constants;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,12 +28,12 @@ public class Assignment implements Parcelable {
 
     public Assignment(JSONObject jsonObject) {
         try {
-            this.title = jsonObject.getString("title");
-            this.dueDate = jsonObject.getString("due_at");
-            this.description = jsonObject.getString("description");
-            this.id = jsonObject.getInt("id");
+            this.title = jsonObject.getString(Constants.TITLE);
+            this.dueDate = jsonObject.getString(Constants.DUE_AT);
+            this.description = jsonObject.getString(Constants.DESCRIPTION);
+            this.id = jsonObject.getInt(Constants.ID);
         } catch (JSONException e) {
-            Log.d(LOG_TAG, e.getMessage());
+            Log.d(LOG_TAG, "JSONException: " + e.getMessage());
         }
     }
 
@@ -41,7 +43,7 @@ public class Assignment implements Parcelable {
             try {
                 assignments.add(new Assignment(jsonArray.getJSONObject(i)));
             } catch (JSONException e) {
-                Log.d(LOG_TAG, e.getMessage());
+                Log.d(LOG_TAG, "JSONException: " + e.getMessage());
             }
         }
         return assignments;

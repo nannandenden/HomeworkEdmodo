@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.nanden.homeworkedmodo.R;
 import com.android.nanden.homeworkedmodo.Utils;
@@ -23,37 +24,49 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
 public class AssignmentDetailActivity extends AppCompatActivity implements AssignmentDetailAdapter.OnItemClickListener{
+
     private static final String LOG_TAG = AssignmentDetailActivity.class.getSimpleName();
+
     private Assignment assignment;
-    private TextView tvDescription;
-    private RecyclerView rvStudents;
     private List<Student> students;
     private AssignmentDetailAdapter adapter;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.tvDescription) TextView tvDescription;
+    @BindView(R.id.rvStudentDetail) RecyclerView rvStudents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assignment_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        assignment = getIntent().getParcelableExtra(getString(R.string
-                .intent_assignment));
-        getSupportActionBar().setTitle(assignment.getTitle());
+        ButterKnife.bind(this);
         setView();
-        setStudentList();
+        setStudentsList();
     }
 
     private void setView() {
-        tvDescription = (TextView) findViewById(R.id.tvDetail);
+        assignment = getIntent().getParcelableExtra(getString(R.string
+                .intent_assignment));
+
+        setSupportActionBar(toolbar);
+        if (!assignment.getTitle().isEmpty()) {
+            getSupportActionBar().setTitle(assignment.getTitle());
+        } else {
+            getSupportActionBar().setTitle(getString(R.string.app_name));
+        }
+
         if (!assignment.getDescription().isEmpty()) {
             tvDescription.setText(assignment.getDescription());
+        } else {
+            tvDescription.setText(R.string.no_description);
         }
-        rvStudents = (RecyclerView) findViewById(R.id.rvDetail);
+
         students = new ArrayList<>();
         adapter = new AssignmentDetailAdapter(this, students, this);
         rvStudents.setAdapter(adapter);
@@ -61,22 +74,20 @@ public class AssignmentDetailActivity extends AppCompatActivity implements Assig
     }
 
 
-    private void setStudentList() {
+    private void setStudentsList() {
         Callback callback = new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(LOG_TAG, e.getMessage());
+                Log.d(LOG_TAG, "Network call error: " + e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d(LOG_TAG, response.toString());
                 String responseData = response.body().string();
                 JSONArray jsonArray = null;
                 try {
                     jsonArray = new JSONArray(responseData);
                     students.addAll(Student.fromJsonArray(jsonArray));
-                    Log.d(LOG_TAG, students.toString());
 
                 } catch (JSONException e) {
                     Log.d(LOG_TAG, e.getMessage());
@@ -95,14 +106,16 @@ public class AssignmentDetailActivity extends AppCompatActivity implements Assig
             StudentClient client = new StudentClient();
             String id = Integer.toString(assignment.getId());
             client.getStudents(id, callback);
+        } else {
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onItemClick(Student student) {
         Intent intent = new Intent(AssignmentDetailActivity.this, StudentActivity.class);
-        intent.putExtra("student", student);
-        intent.putExtra("title", assignment.getTitle());
+        intent.putExtra(getString(R.string.intent_student), student);
+        intent.putExtra(getString(R.string.intent_title), assignment.getTitle());
         startActivity(intent);
     }
 }

@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.nanden.homeworkedmodo.R;
 import com.android.nanden.homeworkedmodo.Utils;
@@ -21,6 +22,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -29,16 +32,17 @@ public class AssignmentsActivity extends AppCompatActivity implements Assignment
         .onItemClickListener {
 
     private static final String LOG_TAG = AssignmentsActivity.class.getSimpleName();
+
     private List<Assignment> assignments;
     private AssignmentAdapter adapter;
-    private RecyclerView rvAssignments;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.rvAssignments) RecyclerView rvAssignments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assignments);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
 
         setView();
         setAssignmentList();
@@ -46,7 +50,7 @@ public class AssignmentsActivity extends AppCompatActivity implements Assignment
     }
 
     private void setView() {
-        rvAssignments = (RecyclerView) findViewById(R.id.rvAssignments);
+        setSupportActionBar(toolbar);
         assignments = new ArrayList<>();
         adapter = new AssignmentAdapter(this, assignments, this);
         rvAssignments.setAdapter(adapter);
@@ -65,7 +69,7 @@ public class AssignmentsActivity extends AppCompatActivity implements Assignment
                     assignments.addAll(Assignment.fromJsonArray(jsonArray));
 
                 } catch (JSONException e) {
-                    Log.d(LOG_TAG, e.getMessage());
+                    Log.d(LOG_TAG, "Network call error: " + e.getMessage());
                 }
 
                 AssignmentsActivity.this.runOnUiThread(new Runnable() {
@@ -85,6 +89,8 @@ public class AssignmentsActivity extends AppCompatActivity implements Assignment
         if (Utils.isNetworkAvailable(this)) {
             AssignmentClient client = new AssignmentClient();
             client.getAssignments(callback);
+        } else {
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show();
         }
     }
 

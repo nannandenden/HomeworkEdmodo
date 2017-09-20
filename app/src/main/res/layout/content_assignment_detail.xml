@@ -28,7 +28,7 @@
         android:text="Wanda Li"/>
 
     <TextView
-        android:id="@+id/tvSubmission"
+        android:id="@+id/tvSubmitDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

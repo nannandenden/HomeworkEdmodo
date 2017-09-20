@@ -8,24 +8,18 @@ import okhttp3.HttpUrl;
 import okhttp3.Request;
 
 /**
- * Created by nanden on 9/19/17.
+ * StudentClient
  */
 
 public class StudentClient {
 
-    public StudentClient() {
-    }
-
     public void getStudents(String id, Callback callback) {
         HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.BASE_URL_SUBMISSION).newBuilder();
-        urlBuilder.addQueryParameter("assignment_id", id);
-        urlBuilder.addQueryParameter("access_token", Constants.ACCESS_TOKEN_SUBMISSION);
+        urlBuilder.addQueryParameter(Constants.ASSIGNMENT_ID, id);
+        urlBuilder.addQueryParameter(Constants.ACCESS_TOKEN, Constants.ACCESS_TOKEN_SUBMISSION);
         String url = urlBuilder.build().toString();
-        System.out.println("url: " + url);
         Request request = new Request.Builder().url(url).build();
         App.getClient().newCall(request).enqueue(callback);
     }
-
-
 
 }
