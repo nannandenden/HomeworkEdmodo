@@ -5,21 +5,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.android.nanden.homeworkedmodo.activities.AssignmentsActivity"
-    tools:showIn="@layout/activity_assignments">
+    tools:context="com.android.nanden.homeworkedmodo.activities.AssignmentsActivity">
 
     <TextView
-        android:id="@+id/tvName"
+        android:id="@+id/tvAssignmentTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:textAppearance="@android:style/TextAppearance.Large"/>
 
     <TextView
         android:id="@+id/tvDueDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_weight="2"
+        android:textAppearance="@android:style/TextAppearance.Large"/>
 
 </LinearLayout>
