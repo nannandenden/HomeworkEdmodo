@@ -6,4 +6,5 @@
     <string name="intent_description">description</string>
     <string name="intent_title">title</string>
     <string name="intent_assignment">assignment</string>
+    <string name="title_activity_student">StudentActivity</string>
 </resources>
