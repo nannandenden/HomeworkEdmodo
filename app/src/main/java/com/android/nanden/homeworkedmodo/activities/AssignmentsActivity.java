@@ -1,5 +1,6 @@
 package com.android.nanden.homeworkedmodo.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,7 +25,8 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class AssignmentsActivity extends AppCompatActivity {
+public class AssignmentsActivity extends AppCompatActivity implements AssignmentAdapter
+        .onItemClickListener {
 
     private static final String LOG_TAG = AssignmentsActivity.class.getSimpleName();
     private List<Assignment> assignments;
@@ -46,7 +48,7 @@ public class AssignmentsActivity extends AppCompatActivity {
     private void setView() {
         rvAssignments = (RecyclerView) findViewById(R.id.rvAssignments);
         assignments = new ArrayList<>();
-        adapter = new AssignmentAdapter(this, assignments);
+        adapter = new AssignmentAdapter(this, assignments, this);
         rvAssignments.setAdapter(adapter);
         rvAssignments.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -86,4 +88,10 @@ public class AssignmentsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onItemClick(Assignment assignment) {
+        Intent intent = new Intent(AssignmentsActivity.this, AssignmentDetailActivity.class);
+        intent.putExtra(getString(R.string.intent_assignment), assignment);
+        startActivity(intent);
+    }
 }

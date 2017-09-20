@@ -1,5 +1,7 @@
 package com.android.nanden.homeworkedmodo.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -9,17 +11,25 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Assignment {
+/**
+ * Assignment POJP
+ */
+
+public class Assignment implements Parcelable {
 
     private static final String LOG_TAG = Assignment.class.getSimpleName();
 
     private String title;
     private String dueDate;
+    private String description;
+    private int id;
 
     public Assignment(JSONObject jsonObject) {
         try {
             this.title = jsonObject.getString("title");
             this.dueDate = jsonObject.getString("due_at");
+            this.description = jsonObject.getString("description");
+            this.id = jsonObject.getInt("id");
         } catch (JSONException e) {
             Log.d(LOG_TAG, e.getMessage());
         }
@@ -44,4 +54,44 @@ public class Assignment {
     public String getDueDate() {
         return dueDate;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    protected Assignment(Parcel in) {
+        title = in.readString();
+        dueDate = in.readString();
+        description = in.readString();
+        id = in.readInt();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeString(dueDate);
+        parcel.writeString(description);
+        parcel.writeInt(id);
+    }
+
+    public static final Creator<Assignment> CREATOR = new Creator<Assignment>() {
+        @Override
+        public Assignment createFromParcel(Parcel in) {
+            return new Assignment(in);
+        }
+
+        @Override
+        public Assignment[] newArray(int size) {
+            return new Assignment[size];
+        }
+    };
 }

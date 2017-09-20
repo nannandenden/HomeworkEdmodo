@@ -18,12 +18,19 @@ import java.util.List;
 
 public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.ViewHolder> {
 
+    public interface onItemClickListener {
+        void onItemClick(Assignment assignment);
+    }
     private Context context;
-    private List<Assignment> assignments;
+    private final List<Assignment> assignments;
 
-    public AssignmentAdapter(Context context, List<Assignment> assignments) {
+    private final onItemClickListener listener;
+
+    public AssignmentAdapter(Context context, List<Assignment> assignments, onItemClickListener
+            listener) {
         this.context = context;
         this.assignments = assignments;
+        this.listener = listener;
     }
 
     @Override
@@ -36,7 +43,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Assignment assignment = this.assignments.get(position);
-        holder.bind(assignment);
+        holder.bind(assignment, listener);
     }
 
     @Override
@@ -55,9 +62,15 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
             tvDueDate = itemView.findViewById(R.id.tvDueDate);
         }
 
-        public void bind(final Assignment assignment) {
+        public void bind(final Assignment assignment, final onItemClickListener listener) {
             tvTitle.setText(assignment.getTitle());
             tvDueDate.setText(assignment.getDueDate());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClick(assignment);
+                }
+            });
         }
     }
 }

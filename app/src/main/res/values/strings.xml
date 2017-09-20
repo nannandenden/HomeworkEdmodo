@@ -2,4 +2,8 @@
     <string name="app_name">HomeworkEdmodo</string>
     <string name="action_settings">Settings</string>
     <string name="assignment">Assignments</string>
+    <string name="title_activity_assignment_detail">AssignmentDetailActivity</string>
+    <string name="intent_description">description</string>
+    <string name="intent_title">title</string>
+    <string name="intent_assignment">assignment</string>
 </resources>
