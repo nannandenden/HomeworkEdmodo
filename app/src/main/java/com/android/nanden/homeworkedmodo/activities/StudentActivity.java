@@ -10,42 +10,45 @@ import com.android.nanden.homeworkedmodo.R;
 import com.android.nanden.homeworkedmodo.model.Student;
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class StudentActivity extends AppCompatActivity {
 
     private Student student;
-    private ImageView ivAvatar;
-    private TextView tvName;
-    private TextView tvSubmitDate;
-    private TextView tvContent;
-    private Toolbar toolbar;
+
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.ivAvatar) ImageView ivAvatar;
+    @BindView(R.id.tvName) TextView tvName;
+    @BindView(R.id.tvSubmitDate) TextView tvSubmitDate;
+    @BindView(R.id.tvContent) TextView tvContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student);
+        ButterKnife.bind(this);
+
         setView();
 
     }
 
     private void setView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        String title = getIntent().getStringExtra("title");
-        getSupportActionBar().setTitle(title);
+        String title = getIntent().getStringExtra(getString(R.string.intent_title));
+        if (!title.isEmpty()) {
+            getSupportActionBar().setTitle(title);
+        } else {
+            getSupportActionBar().setTitle(getString(R.string.app_name));
+        }
 
-        student = getIntent().getParcelableExtra("student");
+        student = getIntent().getParcelableExtra(getString(R.string.intent_student));
 
-        ivAvatar = (ImageView) findViewById(R.id.ivAvatar);
         ivAvatar.setImageResource(0);
         Picasso.with(this).load(student.getAvatar()).into(ivAvatar);
 
-        tvName = (TextView) findViewById(R.id.tvName);
         tvName.setText(student.getName());
-
-        tvSubmitDate = (TextView) findViewById(R.id.tvSubmitDate);
         tvSubmitDate.setText(student.getSubmitDate());
-
-        tvContent = (TextView) findViewById(R.id.tvContent);
         tvContent.setText(student.getContent());
     }
 }

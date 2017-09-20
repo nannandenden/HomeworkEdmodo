@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.android.nanden.homeworkedmodo.Constants;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,13 +27,17 @@ public class Student implements Parcelable{
 
     public Student(JSONObject jsonObject) {
         try {
-            this.firstName = jsonObject.getJSONObject("creator").getString("first_name");
-            this.lastName = jsonObject.getJSONObject("creator").getString("last_name");
-            this.avatar = jsonObject.getJSONObject("creator").getJSONObject("avatars").getString("large");
-            this.content = jsonObject.getString("content");
-            this.submitDate = jsonObject.getString("submitted_at");
+            this.firstName = jsonObject.getJSONObject(Constants.CREATOR).getString(Constants
+                    .FIRST_NAME);
+            this.lastName = jsonObject.getJSONObject(Constants.CREATOR).getString(Constants
+                    .LAST_NAME);
+            this.avatar = jsonObject.getJSONObject(Constants.CREATOR).getJSONObject(Constants
+                    .AVATARS).getString
+                    (Constants.LARGE);
+            this.content = jsonObject.getString(Constants.CONTENT);
+            this.submitDate = jsonObject.getString(Constants.SUBMIT_AT);
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.d(LOG_TAG, "JSONException: " + e.getMessage());
         }
 
     }
@@ -42,7 +48,7 @@ public class Student implements Parcelable{
             try {
                 result.add(new Student(jsonArray.getJSONObject(i)));
             } catch (JSONException e) {
-                Log.d(LOG_TAG, e.getMessage());
+                Log.d(LOG_TAG, "JSONException: " + e.getMessage());
             }
         }
         return result;

@@ -12,6 +12,9 @@ import com.android.nanden.homeworkedmodo.model.Assignment;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by nanden on 9/19/17.
  */
@@ -53,13 +56,12 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvTitle;
-        private TextView tvDueDate;
+        @BindView(R.id.tvAssignmentTitle) TextView tvTitle;
+        @BindView(R.id.tvDueDate) TextView tvDueDate;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.tvAssignmentTitle);
-            tvDueDate = itemView.findViewById(R.id.tvDueDate);
+            ButterKnife.bind(this, itemView);
         }
 
         public void bind(final Assignment assignment, final onItemClickListener listener) {
