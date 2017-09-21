@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by nanden on 9/19/17.
+ * AssignmentAdapter-
  */
 
 public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.ViewHolder> {
@@ -24,7 +24,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
     public interface onItemClickListener {
         void onItemClick(Assignment assignment);
     }
-    private Context context;
+    private final Context context;
     private final List<Assignment> assignments;
 
     private final onItemClickListener listener;
@@ -38,7 +38,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(this.context).inflate(R.layout.content_homework, parent,
+        View view = LayoutInflater.from(this.context).inflate(R.layout.content_assignment, parent,
                 false);
         return new ViewHolder(view);
     }
@@ -66,7 +66,8 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
 
         public void bind(final Assignment assignment, final onItemClickListener listener) {
             tvTitle.setText(assignment.getTitle());
-            tvDueDate.setText(assignment.getDueDate());
+            String dueDate = "due " + assignment.getDueDate();
+            tvDueDate.setText(dueDate);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

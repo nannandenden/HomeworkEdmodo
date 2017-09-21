@@ -1,3 +1,7 @@
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="iv_margin">10dp</dimen>
+    <dimen name="tv_padding">10dp</dimen>
+    <dimen name="tv_margin">10dp</dimen>
+    <dimen name="layout_padding">10dp</dimen>
+    <dimen name="iv_padding">10dp</dimen>
 </resources>

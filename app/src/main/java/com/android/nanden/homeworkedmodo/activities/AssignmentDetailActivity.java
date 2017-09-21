@@ -84,7 +84,7 @@ public class AssignmentDetailActivity extends AppCompatActivity implements Assig
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseData = response.body().string();
-                JSONArray jsonArray = null;
+                JSONArray jsonArray;
                 try {
                     jsonArray = new JSONArray(responseData);
                     students.addAll(Student.fromJsonArray(jsonArray));

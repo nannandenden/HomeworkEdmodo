@@ -18,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by nanden on 9/20/17.
+ * AssignmentDetailAdapter-
  */
 
 public class AssignmentDetailAdapter extends RecyclerView.Adapter<AssignmentDetailAdapter.ViewHolder> {
@@ -26,9 +26,9 @@ public class AssignmentDetailAdapter extends RecyclerView.Adapter<AssignmentDeta
     public interface OnItemClickListener {
         void onItemClick(Student student);
     }
-    private Context context;
-    private List<Student> students;
-    private OnItemClickListener listener;
+    private final Context context;
+    private final List<Student> students;
+    private final OnItemClickListener listener;
 
     public AssignmentDetailAdapter(Context context, List<Student> students, OnItemClickListener
             listener) {
@@ -68,7 +68,8 @@ public class AssignmentDetailAdapter extends RecyclerView.Adapter<AssignmentDeta
 
         public void bind(final Student student, final OnItemClickListener listener) {
             tvName.setText(student.getName());
-            tvSubmitDate.setText(student.getSubmitDate());
+            String submitDate = "turned in " + student.getSubmitDate();
+            tvSubmitDate.setText(submitDate);
             ivAvatar.setImageResource(0);
             Picasso.with(context).load(student.getAvatar()).into(ivAvatar);
             itemView.setOnClickListener(new View.OnClickListener() {
