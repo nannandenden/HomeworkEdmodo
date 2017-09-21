@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import com.android.nanden.homeworkedmodo.Constants;
+import com.android.nanden.homeworkedmodo.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,7 +63,7 @@ public class Student implements Parcelable{
         return avatar;
     }
     public String getSubmitDate() {
-        return submitDate;
+        return Utils.parseDate(submitDate);
     }
 
     public String getContent() {

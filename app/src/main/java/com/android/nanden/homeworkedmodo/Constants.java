@@ -1,7 +1,7 @@
 package com.android.nanden.homeworkedmodo;
 
 /**
- * Created by nanden on 9/20/17.
+ * Constants-
  */
 
 public class Constants {

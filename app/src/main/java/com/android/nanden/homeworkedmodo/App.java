@@ -5,7 +5,7 @@ import android.app.Application;
 import okhttp3.OkHttpClient;
 
 /**
- * Created by nanden on 9/19/17.
+ * App
  */
 
 public class App extends Application {

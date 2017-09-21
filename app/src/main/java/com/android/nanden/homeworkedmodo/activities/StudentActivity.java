@@ -48,7 +48,8 @@ public class StudentActivity extends AppCompatActivity {
         Picasso.with(this).load(student.getAvatar()).into(ivAvatar);
 
         tvName.setText(student.getName());
-        tvSubmitDate.setText(student.getSubmitDate());
+        String submitDate = "turned in " + student.getSubmitDate();
+        tvSubmitDate.setText(submitDate);
         tvContent.setText(student.getContent());
     }
 }

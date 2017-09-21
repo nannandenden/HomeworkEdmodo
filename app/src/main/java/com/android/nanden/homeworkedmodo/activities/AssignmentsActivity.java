@@ -51,6 +51,7 @@ public class AssignmentsActivity extends AppCompatActivity implements Assignment
 
     private void setView() {
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getString(R.string.assignment));
         assignments = new ArrayList<>();
         adapter = new AssignmentAdapter(this, assignments, this);
         rvAssignments.setAdapter(adapter);
@@ -62,7 +63,7 @@ public class AssignmentsActivity extends AppCompatActivity implements Assignment
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseData = response.body().string();
-                JSONArray jsonArray = null;
+                JSONArray jsonArray;
 
                 try {
                     jsonArray = new JSONArray(responseData);
